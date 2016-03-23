@@ -1,0 +1,274 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:Horde_Editor.Controls="clr-namespace:Horde_Editor.Controls"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    
+        x:Name="Horde_Editor" x:Class="Horde_Editor.MainWindow"
+        Title="Horde Editor" Height="608" Width="808" Background="White" Initialized="Window_Initialized" Loaded="Horde_Editor_Loaded" Closing="Horde_Editor_Closing" WindowState="Maximized" Icon="Resources/icon.ico" Deactivated="Horde_Editor_Deactivated" Activated="Horde_Editor_Activated" >
+    <Grid>
+        <StatusBar Margin="0,0,288,0" Height="33" VerticalAlignment="Bottom">
+            <Label x:Name="label_coord1" Content="coord1"/>
+            <Label x:Name="label_coord2" Content="coord2"/>
+            <Separator/>
+            <Label x:Name="label_selected_spr" Content="selected__sprite" Margin="0" HorizontalAlignment="Right"/>
+            <Separator/>
+            <Label x:Name="label_spr_id" Content="spr__id"/>
+            <Separator/>
+            <Label x:Name="label_units_count" Content="units__count"/>
+        </StatusBar>
+        <TabControl x:Name="tabControl_Palette" HorizontalAlignment="Right" Margin="0,18,0,0" Width="288" Background="#FFACACAC" SelectedIndex="1" SelectionChanged="tabControl_Palette_SelectionChanged">
+            <TabItem x:Name="Ground_Palette_Tab" Header="Land">
+                <Grid Background="#FFE5E5E5">
+                    <ScrollViewer x:Name="Land_scrollViewer" HorizontalAlignment="Center" Width="282" Margin="0,37,0,0">
+                        <Canvas x:Name="Ground_Pallete_Canvas" Margin="0">
+                            <Image x:Name="Ground_Pallete_Image" VerticalAlignment="Top" MouseDown="Ground_Pallete_Image_MouseDown"/>
+                            <Rectangle x:Name="ground_selector" HorizontalAlignment="Left" Height="32" Stroke="Red" Width="32" VerticalAlignment="Top"/>
+                        </Canvas>
+                    </ScrollViewer>
+                    <ComboBox x:Name="comboBox_Brush" Height="20" Margin="55,12,0,0" VerticalAlignment="Top" Width="50" HorizontalAlignment="Left" SelectedIndex="0" SelectionChanged="ComboBox_Brush_SelectionChanged"/>
+
+                    <Label Content="Brush" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="Find_SelectedTile_button" Content="Find Selected" HorizontalAlignment="Left" Margin="176,12,0,0" VerticalAlignment="Top" Width="75" Click="Find_SelectedTile_button_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="AutoTiles_Palette_Tab" Header="AutoTiles">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Brush" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="comboBox_autoBrush" Height="20" Margin="63,12,0,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left" SelectedIndex="{Binding ElementName=comboBox_Brush,Path=SelectedIndex}"/>
+                    <Label Content="Type1" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="autoTile_Type1_comboBox" Height="20" Margin="63,37,0,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left" SelectedIndex="0" SelectionChanged="autoTile_comboBox_SelectionChanged"/>
+                    <Label Content="Type2" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="autoTile_Type2_comboBox" Height="20" Margin="63,62,0,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left" SelectedIndex="0" SelectionChanged="autoTile_comboBox_SelectionChanged"/>
+                    <Button x:Name="autoTile_SwapTypes_button" Content="Swap types" HorizontalAlignment="Left" Margin="168,37,0,0" VerticalAlignment="Top" Width="75" Click="autoTile_SwapTypes_button_Click"/>
+
+                    <Border HorizontalAlignment="Left" Height="89" Margin="10,253,0,0" VerticalAlignment="Top" Width="262">
+                        <Grid>
+                            <ToggleButton x:Name="lu_toggleButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="32" Height="32" Checked="autoTile_toggleButton_Checked" Unchecked="autoTile_toggleButton_Unchecked" Margin="10,10,0,0"/>
+                            <ToggleButton x:Name="ru_toggleButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="32" Height="32" Checked="autoTile_toggleButton_Checked" Unchecked="autoTile_toggleButton_Unchecked" Margin="47,10,0,0"/>
+                            <ToggleButton x:Name="ld_toggleButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="32" Height="32" Checked="autoTile_toggleButton_Checked" Unchecked="autoTile_toggleButton_Unchecked" Margin="10,47,0,0"/>
+                            <ToggleButton x:Name="rd_toggleButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="32" Height="32" Checked="autoTile_toggleButton_Checked" Unchecked="autoTile_toggleButton_Unchecked" Margin="47,47,0,0"/>
+                            <Button x:Name="select_all_toggles_button" Content="All" HorizontalAlignment="Left" Margin="120,10,0,0" VerticalAlignment="Top" Width="75" Click="select_all_toggles_button_Click"/>
+                            <Button x:Name="invert_toggles_button" Content="Invert" HorizontalAlignment="Left" Margin="120,35,0,0" VerticalAlignment="Top" Width="75" Click="invert_toggles_button_Click"/>
+                        </Grid>
+                    </Border>
+                    <CheckBox x:Name="Aggressive_AutoTile_checkBox" Content="Aggressive" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Click="AutoTile_checkBox_Click"/>
+                    <CheckBox x:Name="OnlyAll_AutoTile_checkBox" Content="Only All" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Click="AutoTile_checkBox_Click"/>
+                    <CheckBox x:Name="OnlyInRect_AutoTile_checkBox" Content="Only in Rect (without bounds)" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top" Click="AutoTile_checkBox_Click"/>
+                    <CheckBox x:Name="Recursive_AutoTile_checkBox" Content="Recursive" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top" Click="AutoTile_checkBox_Click" IsChecked="True"/>
+                    <Image Margin="10,441,10,10"/>
+                    <Label Content="Variant" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="autoTile_variant_comboBox" Height="20" Margin="63,87,0,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left" SelectedIndex="0" SelectionChanged="autoTile_variant_comboBox_SelectionChanged"/>
+                    <Border HorizontalAlignment="Left" Height="89" Margin="10,347,0,0" VerticalAlignment="Top" Width="262">
+                        <Grid>
+                            <ToggleButton x:Name="lu_cursor_info_toggleButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="32" Height="32" Margin="10,10,0,0" PreviewMouseDown="cursor_info_toggleButton_PreviewMouseDown" IsHitTestVisible="False" IsTabStop="False" Focusable="False"/>
+                            <ToggleButton x:Name="ru_cursor_info_toggleButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="32" Height="32" Margin="47,10,0,0" PreviewMouseDown="cursor_info_toggleButton_PreviewMouseDown" IsHitTestVisible="False" IsTabStop="False" Focusable="False"/>
+                            <ToggleButton x:Name="ld_cursor_info_toggleButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="32" Height="32" Margin="10,47,0,0" PreviewMouseDown="cursor_info_toggleButton_PreviewMouseDown" IsHitTestVisible="False" IsTabStop="False" Focusable="False"/>
+                            <ToggleButton x:Name="rd_cursor_info_toggleButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="32" Height="32" Margin="47,47,0,0" PreviewMouseDown="cursor_info_toggleButton_PreviewMouseDown" IsHitTestVisible="False" IsTabStop="False" Focusable="False"/>
+                            <Label x:Name="type1_cursor_info_label" Content="Type1" HorizontalAlignment="Left" Margin="118,5,0,0" VerticalAlignment="Top"/>
+                            <Label x:Name="type2_cursor_info_label" Content="Type2" HorizontalAlignment="Left" Margin="118,31,0,0" VerticalAlignment="Top"/>
+                            <Label x:Name="variant_cursor_info_label" Content="Variant" HorizontalAlignment="Left" Margin="118,57,0,0" VerticalAlignment="Top"/>
+                        </Grid>
+                    </Border>
+                    <ToggleButton x:Name="debug_button" Content="Debug" HorizontalAlignment="Left" Margin="12,196,0,0" VerticalAlignment="Top" Width="75" Click="debug_button_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Unit_Palette_Tab" Header="Units">
+                <Grid Background="#FFE5E5E5">
+                    <Image x:Name="Player_color_Box" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" VerticalAlignment="Top" Width="22"/>
+                    <ComboBox x:Name="comboBox_Player" HorizontalAlignment="Left" Margin="66,10,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="comboBox_Player_SelectionChanged">
+                        <ComboBoxItem Content="Олег"/>
+                        <ComboBoxItem Content="Игорь"/>
+                        <ComboBoxItem Content="Эйрик"/>
+                        <ComboBoxItem Content="Зеленый комп"/>
+                        <ComboBoxItem Content="Теймур"/>
+                        <ComboBoxItem Content="Оранжевый комп"/>
+                        <ComboBoxItem Content="Колдун"/>
+                        <ComboBoxItem Content="Природа"/>
+                    </ComboBox>
+                    <Label x:Name="label_PlayerUnits" Content="Label" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+                    <TreeView x:Name="units_Tree" Margin="10,93,10,10" SelectedItemChanged="units_Tree_SelectedItemChanged"/>
+                    <Image x:Name="image_UnitPortrait" HorizontalAlignment="Left" Height="50" Margin="222,10,0,0" VerticalAlignment="Top" Width="50" Source="Resources/icon.ico"/>
+                    <ToggleButton x:Name="OnlyOneUnit_toggleButton" Content="Only one unit at layer" Margin="10,68,143,0" Click="OnlyOneUnit_toggleButton_Click" IsChecked="True" Height="20" VerticalAlignment="Top" Width="129"/>
+                    <ToggleButton x:Name="Recursive_toggleButton" Content="Recursive" Margin="144,68,10,0" Click="Recursive_toggleButton_Click" IsChecked="True" Height="20" VerticalAlignment="Top" Width="128"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Resources_Palette_Tab" Header="Resources">
+                <Grid Background="#FFE5E5E5">
+                    <ComboBox x:Name="comboBox_Resources" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="comboBox_Resources_SelectionChanged">
+                        <ComboBoxItem Content="---"/>
+                        <ComboBoxItem Content="Убрать"/>
+                        <ComboBoxItem Content="Золото"/>
+                        <ComboBoxItem Content="Железо"/>
+                    </ComboBox>
+                    <Label Content="Brush" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="comboBox_resBrush" Height="20" Margin="55,39,0,0" VerticalAlignment="Top" Width="50" HorizontalAlignment="Left" SelectedIndex="{Binding ElementName=comboBox_Brush,Path=SelectedIndex}"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <ScrollViewer x:Name="scrollViewer_Map" Margin="0,18,288,33" Panel.ZIndex="2" ScrollChanged="scrollViewer_Map_ScrollChanged" HorizontalScrollBarVisibility="Visible" SizeChanged="scrollViewer_Map_SizeChanged">
+            <Canvas x:Name="canvas_Map" Margin="0" Background="#4CFFFF00" MouseDown="canvas_Map_MouseDown" MouseMove="canvas_Map_MouseMove" MouseEnter="canvas_Map_MouseEnter" MouseLeave="canvas_Map_MouseLeave">
+                <Canvas.LayoutTransform>
+                    <ScaleTransform 
+                        x:Name="Canvas_Map_scaleTransform"
+                        ScaleX="1"
+                        ScaleY="1"
+                    />
+                </Canvas.LayoutTransform>
+                <Horde_Editor.Controls:GroundTiles_Image x:Name="image_Ground" Height="100" VerticalAlignment="Top" Canvas.Left="0" Canvas.Top="0" Width="100"/>
+                <Horde_Editor.Controls:Resources_Image x:Name="image_Resources" Height="100" VerticalAlignment="Top" Canvas.Left="20" Canvas.Top="20" Width="100"/>
+                <Horde_Editor.Controls:Units_Image x:Name="image_Units" Height="100" VerticalAlignment="Top" Canvas.Left="40" Canvas.Top="40" Width="100"/>
+                <Horde_Editor.Controls:Grid_Image x:Name="image_Grid" Height="100" VerticalAlignment="Top" Canvas.Left="60" Canvas.Top="60" Width="100"/>
+                <Horde_Editor.Controls:Blocks_Image x:Name="cursor_Block" Height="128" VerticalAlignment="Top" Canvas.Left="60" Canvas.Top="60" Width="128"/>
+                <!--
+                    <Horde_Editor.Controls:Mega_Image x:Name="image_Mega" Height="100" VerticalAlignment="Top" Source="Resources/icon.ico" Canvas.Left="0" Canvas.Top="0" Width="100" Stretch="UniformToFill"/>
+                    -->
+                <Rectangle x:Name="rectangle_select" HorizontalAlignment="Left" Height="32" Stroke="Lime" Width="32" VerticalAlignment="Top" Canvas.Left="201" Canvas.Top="20"/>
+                <Rectangle x:Name="rectangle_select_land" HorizontalAlignment="Left" Height="32" Stroke="#FFFFFF80" Width="32" VerticalAlignment="Top" Canvas.Left="207" Canvas.Top="30"/>
+                <Rectangle x:Name="rectangle_cursor" HorizontalAlignment="Left" Height="31" Stroke="White" Width="31" VerticalAlignment="Top" Canvas.Left="214" Canvas.Top="40"/>
+                <Horde_Editor.Controls:Units_Image x:Name="units_in_buffer_image" Height="100" VerticalAlignment="Top" Canvas.Left="286" Canvas.Top="20" Width="100"/>
+            </Canvas>
+        </ScrollViewer>
+        <Menu VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Name="loadScena_Button" Header="Load scena" InputGestureText="Ctrl+O" Click="loadScena_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/icon.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="reloadScena_Button" Header="Reload scena" InputGestureText="Ctrl+Shift+O" Click="reloadScena_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/icon.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="save_Button" Header="Save map" InputGestureText="Ctrl+S" Click="save_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/save.bmp" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="saveAs_Button" Header="Save map As ..." InputGestureText="Ctrl+Shift+S" Click="saveAs_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/save.bmp" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="saveImage_Button" Header="Save image" Click="saveImage_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/picture.bmp" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Windows">
+                <MenuItem Name="showPalette_Button" Header="Pallete" InputGestureText="Ctrl+L" Click="showPalette_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/panel.bmp" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="showMinimap_Button" Header="Minimap" InputGestureText="Ctrl+M" Click="showMinimap_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/picture2.bmp" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="showUnitsTable_Button" Header="Units table" InputGestureText="Ctrl+U" Click="showUnitsTable_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/icon.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="showPlayers_Button" Header="Players" InputGestureText="Ctrl+P" Click="showPlayers_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/icon.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="showBlocks_Button" Header="Blocks" InputGestureText="Ctrl+B" Click="showBlocks_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/icon.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="showTiles_Button" Header="Tiles" InputGestureText="Ctrl+T" Click="showTiles_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/icon.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="scenaProperties_Button" Header="Scena properties" InputGestureText="Ctrl+E" Click="scenaProperties_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/icon.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="View">
+                <MenuItem FontFamily="Monotype Corsiva" Icon="{Binding ElementName=uiScaleSlider,Path=Value}">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Scale" Height="28" VerticalAlignment="Top"/>
+                            <Slider x:Name="uiScaleSlider" VerticalAlignment="Center" Width="100" HorizontalAlignment="Right" Maximum="2" Value="1" TickFrequency="0.125" IsSnapToTickEnabled="True" TickPlacement="BottomRight" LargeChange="0.125" Minimum="0.125" SmallChange="0.125" ValueChanged="uiScaleSlider_ValueChanged"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </MenuItem>
+
+                <MenuItem Header="Grid" InputGestureText="Alt+G" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <ComboBox x:Name="comboBox_Grid" Height="20" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedIndex="0" SelectionChanged="ComboBox_Grid_SelectionChanged">
+                            <ComboBoxItem Content="нет"/>
+                            <ComboBoxItem Content="1"/>
+                            <ComboBoxItem Content="2"/>
+                            <ComboBoxItem Content="4"/>
+                            <ComboBoxItem Content="8"/>
+                            <ComboBoxItem Content="32"/>
+                            <ComboBoxItem Content="64"/>
+                            <ComboBoxItem Content="128"/>
+                        </ComboBox>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!--<StackPanel Orientation="Horizontal">
+                    <Label Content="Grid" Height="28" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="comboBox_Grid" Height="20" Margin="0" VerticalAlignment="Center" Width="50" HorizontalAlignment="Center" SelectedIndex="0" SelectionChanged="ComboBox_Grid_SelectionChanged">
+                        <ComboBoxItem Content="нет"/>
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="8"/>
+                        <ComboBoxItem Content="32"/>
+                        <ComboBoxItem Content="64"/>
+                        <ComboBoxItem Content="128"/>
+                    </ComboBox>
+                </StackPanel>-->
+                <MenuItem x:Name="landView_checkBox" Header="Land" InputGestureText="Alt+L" FontFamily="Monotype Corsiva" IsCheckable="True" IsChecked="True" Checked="landView_checkBox_Checked" Unchecked="landView_checkBox_Unchecked"/>
+                <MenuItem x:Name="unitsView_checkBox" Header="Units" InputGestureText="Alt+U" FontFamily="Monotype Corsiva" IsCheckable="True" IsChecked="True" Checked="unitsView_checkBox_Checked" Unchecked="unitsView_checkBox_Unchecked"/>
+                <MenuItem x:Name="unitsFramesView_checkBox" Header="Units Frames" InputGestureText="Alt+F" FontFamily="Monotype Corsiva" IsCheckable="True" IsChecked="True" Checked="unitsFramesView_checkBox_Checked" Unchecked="unitsFramesView_checkBox_Unchecked"/>
+                <MenuItem x:Name="unitsFramesColorView_checkBox" Header="Units Frames Color" InputGestureText="Alt+C" FontFamily="Monotype Corsiva" IsCheckable="True" IsChecked="True" Checked="unitsFramesColorView_checkBox_Checked" Unchecked="unitsFramesColorView_checkBox_Unchecked"/>
+                <MenuItem x:Name="resourcesView_checkBox" Header="Resources" InputGestureText="Alt+R" FontFamily="Monotype Corsiva" IsCheckable="True" IsChecked="True" Checked="resourcesView_checkBox_Checked" Unchecked="resourcesView_checkBox_Unchecked"/>
+
+            </MenuItem>
+
+            <MenuItem Header="?">
+                <MenuItem Name="showHelp_Button" Header="Help" Click="showHelp_Button_Click" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/help.bmp" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="secret_Button_menuItem" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/icon.ico" />
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <ToggleButton Content="Secret" Name="secret_Button" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="Auto" FontFamily="Monotype Corsiva" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem Name="old_format_Button_menuItem" FontFamily="Monotype Corsiva">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/icon.ico" />
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <ToggleButton Content="Old map format" Name="old_format_Button" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="Auto" FontFamily="Monotype Corsiva" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Checked="old_format_Button_Checked" Unchecked="old_format_Button_Unchecked"/>
+                    </MenuItem.Header>
+                </MenuItem>
+
+
+            </MenuItem>
+
+
+
+        </Menu>
+    </Grid>
+</Window>

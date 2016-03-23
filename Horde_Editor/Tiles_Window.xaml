@@ -1,0 +1,89 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:Controls="clr-namespace:Horde_Editor.Controls" x:Class="Horde_Editor.Tiles_Window"
+        Title="Tiles_Window" Height="570" Width="750" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Closing="Window_Closing" Loaded="Window_Loaded" Topmost="True"
+        KeyDown="tilesImage_KeyDown" KeyUp="Window_KeyUp">
+    <Grid>
+        <Border x:Name="tiles_border" BorderBrush="Black" BorderThickness="1" Margin="10,10,439,10">
+            <Canvas x:Name="tiles_canvas" KeyDown="tiles_canvas_KeyDown">
+                <ScrollViewer x:Name="tiles_scrollViewer" HorizontalAlignment="Left" Height="512" Margin="1,1,0,0" VerticalAlignment="Top" Width="272" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" ScrollChanged="tiles_scrollViewer_ScrollChanged" KeyDown="tiles_scrollViewer_KeyDown">
+                    <Controls:Blocks_Image x:Name="tilesImage" HorizontalAlignment="Left" Height="512" Margin="0,0,0,0" VerticalAlignment="Top" Width="272" MouseUp="tilesImage_MouseUp"/>
+                </ScrollViewer>
+                <ScrollBar x:Name="tiles_scrollBar" Height="320" Scroll="ScrollBar_Scroll" SmallChange="1" HorizontalAlignment="Right" Margin="273,0,0,0"/>
+                <Rectangle x:Name="selector" HorizontalAlignment="Left" Height="32" Margin="1,1,0,0" Stroke="Red" VerticalAlignment="Top" Width="32"/>
+                <Rectangle x:Name="selector_blue" HorizontalAlignment="Left" Height="32" Stroke="Blue" VerticalAlignment="Top" Width="32" Margin="1,1,0,0"/>
+            </Canvas>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Right" Height="127" Margin="0,10,181,0" VerticalAlignment="Top" Width="243">
+            <Canvas>
+                <Label Content="Slowing" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="10"/>
+                <xctk:IntegerUpDown x:Name="slowing_numericUpDown" Value="0" Increment="1" Maximum="7" Minimum="0" Width="100" Height="22" Canvas.Left="131" Canvas.Top="10" />
+                <Label Content="Type" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="36"/>
+                <ComboBox x:Name="type_combobox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Canvas.Left="131" Canvas.Top="37" />
+                <Label Content="Sounds" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="62"/>
+                <ComboBox x:Name="sounds_combobox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Canvas.Left="131" Canvas.Top="64" />
+                <Label Content="Variant" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="88"/>
+                <ComboBox x:Name="variant_combobox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Canvas.Left="131" Canvas.Top="91" />
+            </Canvas>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Right" Height="124" Margin="0,142,181,0" VerticalAlignment="Top" Width="243">
+            <Canvas>
+                <Label Content="left up" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="10"/>
+                <Label Content="right up" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="36"/>
+                <Label Content="left down" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="62"/>
+                <Label Content="right down" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="88"/>
+                <ComboBox x:Name="lu_combobox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Canvas.Left="131" Canvas.Top="10"/>
+                <ComboBox x:Name="ru_combobox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Canvas.Left="131" Canvas.Top="36"/>
+                <ComboBox x:Name="ld_combobox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Canvas.Left="131" Canvas.Top="62"/>
+                <ComboBox x:Name="rd_combobox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Canvas.Left="131" Canvas.Top="88"/>
+            </Canvas>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Height="95" Margin="0,271,181,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="243">
+            <Canvas>
+                <Label Content="sign" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="10"/>
+                <xctk:IntegerUpDown x:Name="sign_numericUpDown" Value="0" Increment="1" Maximum="255" Minimum="0" Width="100" Height="22" Canvas.Left="131" Canvas.Top="12" />
+                <Label Content="first num" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="36"/>
+                <xctk:IntegerUpDown x:Name="first_num_numericUpDown" Value="0" Increment="1" Maximum="65535" Minimum="0" Width="100" Height="22" Canvas.Left="131" Canvas.Top="38" />
+                <Label Content="count frames" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="62"/>
+                <xctk:IntegerUpDown x:Name="count_frames_numericUpDown" Value="0" Increment="1" Maximum="255" Minimum="0" Width="100" Height="22" Canvas.Left="131" Canvas.Top="64" />
+            </Canvas>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Height="508" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="166">
+            <Canvas>
+                <CheckBox x:Name="viewmode_checkBox" Content="tiles view" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="view_checkBox_Checked" Unchecked="view_checkBox_Unchecked" IsChecked="True" Canvas.Left="10" Canvas.Top="10"/>
+                <Button x:Name="moveTo_Button" Content="MoveTo" Canvas.Left="10" Canvas.Top="30" Width="75" Click="moveTo_Button_Click"/>
+                <TextBox x:Name="position_TextBox" Height="20" Canvas.Left="90" TextWrapping="Wrap" Text="№ Tile" Canvas.Top="30" Width="64"/>
+                <Label x:Name="spr_Count_Label"  Content="Sprites count" Canvas.Left="10" Canvas.Top="470"/>
+                <Button x:Name="Delete_Button" Content="Delete this Tile" Canvas.Top="233" Width="144" Canvas.Left="10" Click="Delete_Button_Click"/>
+                <Label Content="Insert" Canvas.Left="10" Canvas.Top="135"/>
+                <Button x:Name="Insert_new_Button" Content="new Tile" Canvas.Left="50" Canvas.Top="138" Width="59" Height="20" Click="Insert_new_Button_Click"/>
+                <Button x:Name="Insert_folder_Button" Content="folder" Canvas.Left="114" Canvas.Top="138" Width="40" Height="20" Click="Insert_folder_Button_Click"/>
+                <Label Content="Minimap color" Canvas.Left="10" Canvas.Top="77"/>
+                <xctk:ColorPicker x:Name="minimap_ColorPicker" Width="144" Height="22" Canvas.Left="10" Canvas.Top="103"  />
+                <Label x:Name="spr_Sel_Label"  Content="Selected sprite" Canvas.Left="10" Canvas.Top="420"/>
+                <Label x:Name="tile_Count_Label"  Content="Tiles count" Canvas.Left="10" Canvas.Top="444"/>
+                <Label x:Name="tile_Sel_Label"  Content="Selected tile" Canvas.Left="10" Canvas.Top="394"/>
+                <Button x:Name="ChangeSprite_Button" Content="Change this Tile" Canvas.Top="183" Width="144" Canvas.Left="10" Click="changeSprite_Button_Click" IsEnabled="False"/>
+                <Button x:Name="Export_Button" Content="Export this Tile" Canvas.Left="10" Canvas.Top="208" Width="144" Height="20" Click="Export_Button_Click"/>
+                <CheckBox x:Name="insertmode_checkBox" Content="Insert before" Canvas.Left="10" Canvas.Top="163" IsChecked="True"/>
+                <Button x:Name="Union_Button" Content="Union with next Tile" Canvas.Left="10" Canvas.Top="280" Width="144" Click="Union_Button_Click"/>
+                <Button x:Name="Break_Button" Content="Break at this Sprite" Canvas.Left="10" Canvas.Top="305" Width="144" Click="Break_Button_Click" IsEnabled="False"/>
+                <Button x:Name="findButton" Content="Find Tile" Canvas.Left="10" Canvas.Top="369" Width="75" Click="Button_Click"/>
+                <Button x:Name="TEST_Button" Content="TEST" Canvas.Left="10" Canvas.Top="344" Width="75" Click="TEST_Button_Click"/>
+                <TextBox x:Name="position_find_TextBox" Height="20" Canvas.Left="90" TextWrapping="Wrap" Text="№ Tile" Canvas.Top="369" Width="64"/>
+
+            </Canvas>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Height="147" Margin="0,371,181,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="243">
+            <Canvas>
+                <Label x:Name="spr_id_Label"  Content="SpriteId" Canvas.Left="10" Canvas.Top="10" />
+                <Label x:Name="tile_id_Label"  Content="TileId" Canvas.Left="10" Canvas.Top="36" />
+                <Label x:Name="nframe_Label"  Content="NFrame" Canvas.Left="10" Canvas.Top="62" />
+                <Label x:Name="frames_count_Label"  Content="Frames count" Canvas.Left="10" Canvas.Top="88" />
+                <Label x:Name="first_frame_Label"  Content="First frame" Canvas.Left="10" Canvas.Top="114" />
+            </Canvas>
+        </Border>
+    </Grid>
+</Window>
