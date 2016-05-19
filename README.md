@@ -9,13 +9,13 @@ Archive contains graphical resources and libs.
 
 
 ## Info
-More info about map editor: [manual (only Russian)](https://vk.com/doc-63967485_333328196)
+More info about map editor: [manual (only in Russian)](https://vk.com/doc-63967485_333328196)
 
 ## Custom maps:
-Best map "Vorej" by *Vladimir Kononenko*.
+First best map "Vorej" by *Vladimir Kononenko*.
 [Download here](https://vk.com/wall-63967485_854)
 
 ![](http://i.imgur.com/Us6g45D.png)
 
-Oher maps with descriptions and Horde info can be found in public at Russian social network https://vk.com/horde_editor
+Other maps with descriptions and Horde info can be found in public at Russian social network https://vk.com/horde_editor
 
